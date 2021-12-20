@@ -63,30 +63,30 @@ function Square(props) {
 }
 
 
-async function grapql_test() {
-    const GET_BOX_INTRO = gql`
-        query {
-            boxIntro(boxId: 6) {
-                boxLogo
-                ownerAddress
-                boxIntroduce
-                boxId
-            }
-        }
-    `;
-
-    const client = new ApolloClient({
-        link: new HttpLink({ uri: 'http://127.0.0.1:34678/arche_v2', fetch }),//'http://127.0.0.1:34678/arche_v2',
-        cache: new InMemoryCache()
-    });
-
-    let res = await client
-        .query({
-            query: GET_BOX_INTRO
-        })
-        .then(result => console.log(result));
-    console.log(res);
-}
+// async function grapql_test() {
+//     const GET_BOX_INTRO = gql`
+//         query {
+//             boxIntro(boxId: 6) {
+//                 boxLogo
+//                 ownerAddress
+//                 boxIntroduce
+//                 boxId
+//             }
+//         }
+//     `;
+//
+//     const client = new ApolloClient({
+//         link: new HttpLink({ uri: 'http://127.0.0.1:34678/arche_v2', fetch }),//'http://127.0.0.1:34678/arche_v2',
+//         cache: new InMemoryCache()
+//     });
+//
+//     let res = await client
+//         .query({
+//             query: GET_BOX_INTRO
+//         })
+//         .then(result => console.log(result));
+//     console.log(res);
+// }
 
 
 class Board extends React.Component {
@@ -169,11 +169,11 @@ class Game extends React.Component {
         });
     }
 
-    async getBoxIntro() {
-        await grapql_test();
-    }
+    // async getBoxIntro() {
+    //     await grapql_test();
+    // }
     async handleClick(i) {
-        await this.getBoxIntro();
+        // await this.getBoxIntro();
         const history = this.state.history.slice(0, this.state.stepNumber + 1);
         const current = history[history.length - 1];
         const squares = current.squares.slice();
