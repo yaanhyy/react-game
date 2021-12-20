@@ -63,30 +63,37 @@ function Square(props) {
 }
 
 
-// async function grapql_test() {
-//     const GET_BOX_INTRO = gql`
-//         query {
-//             boxIntro(boxId: 6) {
-//                 boxLogo
-//                 ownerAddress
-//                 boxIntroduce
-//                 boxId
-//             }
-//         }
-//     `;
-//
-//     const client = new ApolloClient({
-//         link: new HttpLink({ uri: 'http://127.0.0.1:34678/arche_v2', fetch }),//'http://127.0.0.1:34678/arche_v2',
-//         cache: new InMemoryCache()
-//     });
-//
-//     let res = await client
-//         .query({
-//             query: GET_BOX_INTRO
-//         })
-//         .then(result => console.log(result));
-//     console.log(res);
-// }
+async function grapql_test(first,skip) {
+    // const GET_BOX_INTRO = gql`
+    //     query {
+    //         boxIntro(boxId: 6) {
+    //             boxLogo
+    //             ownerAddress
+    //             boxIntroduce
+    //             boxId
+    //         }
+    //     }
+    // `;
+
+    const client = new ApolloClient({
+        link: new HttpLink({ uri: 'http://192.168.0.101:34678/b2long_v1', fetch }),//'http://127.0.0.1:34678/arche_v2',
+        cache: new InMemoryCache()
+    });
+
+    let res = await client
+        .query({
+            query: gql`
+                query {
+                    orderInfo(first: ${first}, skip: ${skip},filter: {productId:[0,1]}) {
+                        tokenId
+                        productId
+                    }
+                }
+            `
+        })
+        .then(result => console.log(result));
+    console.log(res);
+}
 
 
 class Board extends React.Component {
@@ -169,11 +176,11 @@ class Game extends React.Component {
         });
     }
 
-    // async getBoxIntro() {
-    //     await grapql_test();
-    // }
+    async getBoxIntro() {
+        await grapql_test(2,0);
+    }
     async handleClick(i) {
-        // await this.getBoxIntro();
+        await this.getBoxIntro();
         const history = this.state.history.slice(0, this.state.stepNumber + 1);
         const current = history[history.length - 1];
         const squares = current.squares.slice();
